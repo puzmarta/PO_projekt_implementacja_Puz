@@ -19,5 +19,7 @@ public partial class Question
 
     public int QuestionPoolFk { get; set; }
 
+    public virtual ICollection<AnswerMapping> AnswerMappings { get; set; } = new List<AnswerMapping>();
+
     public virtual QuestionPool QuestionPoolFkNavigation { get; set; } = null!;
 }

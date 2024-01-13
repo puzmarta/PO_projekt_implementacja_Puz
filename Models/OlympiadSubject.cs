@@ -7,7 +7,7 @@ public partial class OlympiadSubject
 {
     public int Id { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
     public virtual ICollection<OlympiadWinnerDiploma> OlympiadWinnerDiplomas { get; set; } = new List<OlympiadWinnerDiploma>();
 }

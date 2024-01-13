@@ -7,9 +7,13 @@ public partial class Exam
 {
     public int Id { get; set; }
 
-    public DateOnly? Date { get; set; }
+    public DateOnly Date { get; set; }
 
     public int GradeFk { get; set; }
+
+    public int DocumentFk { get; set; }
+
+    public virtual Document DocumentFkNavigation { get; set; } = null!;
 
     public virtual ICollection<DrawingAdmissionExam> DrawingAdmissionExams { get; set; } = new List<DrawingAdmissionExam>();
 

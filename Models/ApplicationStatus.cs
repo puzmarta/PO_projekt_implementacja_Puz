@@ -7,7 +7,7 @@ public partial class ApplicationStatus
 {
     public int Id { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
     public virtual ICollection<Application> Applications { get; set; } = new List<Application>();
 }

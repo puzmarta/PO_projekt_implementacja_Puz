@@ -7,6 +7,8 @@ public partial class University
 {
     public int Id { get; set; }
 
+    public string Name { get; set; } = null!;
+
     public string? Address { get; set; }
 
     public string? Rector { get; set; }

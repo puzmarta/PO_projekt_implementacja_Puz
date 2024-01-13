@@ -9,7 +9,7 @@ public partial class Specialization
 
     public int AdmissionLimit { get; set; }
 
-    public string? SpecializationName { get; set; }
+    public string SpecializationName { get; set; } = null!;
 
     public int FieldOfStudyFk { get; set; }
 

@@ -7,9 +7,9 @@ public partial class FieldOfStudy
 {
     public int Id { get; set; }
 
-    public string? FieldName { get; set; }
+    public string FieldName { get; set; } = null!;
 
-    public string? FieldAbbreviation { get; set; }
+    public string FieldAbbreviation { get; set; } = null!;
 
     public string? FieldDescription { get; set; }
 
@@ -30,6 +30,8 @@ public partial class FieldOfStudy
     public int AcademicTitleFk { get; set; }
 
     public virtual AcademicTitle AcademicTitleFkNavigation { get; set; } = null!;
+
+    public virtual ICollection<AnswerMapping> AnswerMappings { get; set; } = new List<AnswerMapping>();
 
     public virtual DegreeLevel DegreeLevelFkNavigation { get; set; } = null!;
 

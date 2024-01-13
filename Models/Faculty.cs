@@ -9,9 +9,9 @@ public partial class Faculty
 
     public int UniversityFk { get; set; }
 
-    public string? FacultyName { get; set; }
+    public string FacultyName { get; set; } = null!;
 
-    public string? FacultyNumber { get; set; }
+    public string FacultyNumber { get; set; } = null!;
 
     public virtual ICollection<FieldOfStudy> FieldOfStudies { get; set; } = new List<FieldOfStudy>();
 

@@ -11,7 +11,7 @@ public partial class GraduationDiploma
 
     public int? Grade { get; set; }
 
-    public double WeightedAverage { get; set; }
+    public double Gpa { get; set; }
 
     public int DocumentFk { get; set; }
 

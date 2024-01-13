@@ -11,7 +11,7 @@ public partial class Candidate
 
     public DateOnly? DateOfBirth { get; set; }
 
-    public DateOnly? DateOfIssuingCertificate { get; set; }
+    public DateOnly? DateOfIssuingDiploma { get; set; }
 
     public string? PostalCode { get; set; }
 
@@ -29,9 +29,9 @@ public partial class Candidate
 
     public string? Street { get; set; }
 
-    public string? IdentityDocumentNumber { get; set; }
+    public string IdentityDocumentNumber { get; set; } = null!;
 
-    public string? CertificateNumber { get; set; }
+    public string? HighSchoolDiplomaNumber { get; set; }
 
     public string? IssuingAuthority { get; set; }
 

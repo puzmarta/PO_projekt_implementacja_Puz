@@ -7,7 +7,7 @@ public partial class RankingList
 {
     public int Id { get; set; }
 
-    public int? Title { get; set; }
+    public string Title { get; set; } = null!;
 
     public virtual ICollection<Candidate> CandidateFks { get; set; } = new List<Candidate>();
 }

@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using PO_projekt_implementacja_Puz.Models;
 using Microsoft.Extensions.Configuration;
+using PO_projekt_implementacja_Puz.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<TestContext>(options =>
-   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<RecruitmentSystemContext>(options =>
+   options.UseSqlServer(builder.Configuration.GetConnectionString("RecruitmentSystem")));
 
 var app = builder.Build();
 

@@ -7,7 +7,7 @@ public partial class Application
 {
     public int Id { get; set; }
 
-    public string? ApplicationIdentifier { get; set; }
+    public string ApplicationIdentifier { get; set; } = null!;
 
     public double RecruitmentIndex { get; set; }
 
@@ -17,15 +17,19 @@ public partial class Application
 
     public int ApplicationStatusFk { get; set; }
 
-    public int? HighSchoolTranscriptFk { get; set; }
+    public int? HighSchoolDiplomaFk { get; set; }
 
-    public virtual ApplicationStatus ApplicationStatusFkNavigation { get; set; } = null!;
+    public int DocumentFk { get; set; }
 
-    public virtual Candidate CandidateFkNavigation { get; set; } = null!;
+    public virtual ApplicationStatus ApplicationStatus { get; set; } = null!;
+
+    public virtual Candidate Candidate { get; set; } = null!;
+
+    public virtual Document Document { get; set; } = null!;
 
     public virtual ICollection<Document> Documents { get; set; } = new List<Document>();
 
-    public virtual HighSchoolDiploma? HighSchoolTranscriptFkNavigation { get; set; }
+    public virtual HighSchoolDiploma? HighSchoolDiploma { get; set; }
 
-    public virtual Recruitment RecruitmentFkNavigation { get; set; } = null!;
+    public virtual Recruitment Recruitment{ get; set; } = null!;
 }

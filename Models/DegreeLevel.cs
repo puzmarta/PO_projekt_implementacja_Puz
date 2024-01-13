@@ -7,7 +7,7 @@ public partial class DegreeLevel
 {
     public int Id { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
     public virtual ICollection<FieldOfStudy> FieldOfStudies { get; set; } = new List<FieldOfStudy>();
 }

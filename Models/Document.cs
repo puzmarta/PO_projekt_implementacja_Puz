@@ -9,11 +9,15 @@ public partial class Document
 
     public DateOnly? CreationDate { get; set; }
 
-    public int ApplicationFk { get; set; }
+    public int? ApplicationFk { get; set; }
 
     public string Name { get; set; } = null!;
 
-    public virtual Application ApplicationFkNavigation { get; set; } = null!;
+    public virtual Application? ApplicationFkNavigation { get; set; }
+
+    public virtual ICollection<Application> Applications { get; set; } = new List<Application>();
+
+    public virtual ICollection<Exam> Exams { get; set; } = new List<Exam>();
 
     public virtual ICollection<GraduationDiploma> GraduationDiplomas { get; set; } = new List<GraduationDiploma>();
 

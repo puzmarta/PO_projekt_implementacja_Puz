@@ -7,7 +7,7 @@ public partial class TalentStudyCompletionCertificate
 {
     public int Id { get; set; }
 
-    public DateOnly? AcquisitionDate { get; set; }
+    public DateOnly AcquisitionDate { get; set; }
 
     public int DocumentFk { get; set; }
 

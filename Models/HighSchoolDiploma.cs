@@ -7,7 +7,9 @@ public partial class HighSchoolDiploma
 {
     public int Id { get; set; }
 
-    public DateOnly? AcquisitionDate { get; set; }
+    public DateOnly AcquisitionDate { get; set; }
+
+    public string DiplomaNumber { get; set; } = null!;
 
     public double BiologyResult { get; set; }
 
