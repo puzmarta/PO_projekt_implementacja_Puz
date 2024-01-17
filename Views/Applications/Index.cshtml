@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PO_projekt_implementacja_Puz.Models.Application>
+﻿@model IEnumerable<PO_projekt_implementacja_Puz.ViewModels.ApplicationViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,57 +13,52 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationIdentifier)
+                <h3>Id</h3>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RecruitmentIndex)
+                <h3>Data złożenia</h3>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationStatusFkNavigation)
+                <h3>Status</h3>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CandidateFkNavigation)
+                <h3>Wydział</h3>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DocumentFkNavigation)
+                <h3>Kierunek</h3>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HighSchoolDiplomaFkNavigation)
+                <h3>Kandydat</h3>
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RecruitmentFkNavigation)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+
+       
+            <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationIdentifier)
+                @Html.DisplayFor(modelItem => item.Identfier)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RecruitmentIndex)
+                @Html.DisplayFor(modelItem => item.SubmissionDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationStatusFkNavigation.Id)
+                @Html.DisplayFor(modelItem => item.Status.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CandidateFkNavigation.Id)
+                    @Html.DisplayFor(modelItem => item.Recruitment.FieldOfStudyFkNavigation.FacultyFkNavigation.FacultyName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DocumentFkNavigation.Id)
+                @Html.DisplayFor(modelItem => item.Recruitment.FieldOfStudyFkNavigation.FieldName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HighSchoolDiplomaFkNavigation.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RecruitmentFkNavigation.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @{
+                        var user = item.Candidate.LoggedUserFkNavigation;
+                        var nameString = $"{user.FirstName} {user.LastName} - {item.Candidate.Pesel}";
+                    }
+                    @nameString
+                    
             </td>
         </tr>
 }
