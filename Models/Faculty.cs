@@ -15,5 +15,5 @@ public partial class Faculty
 
     public virtual ICollection<FieldOfStudy> FieldOfStudies { get; set; } = new List<FieldOfStudy>();
 
-    public virtual University UniversityFkNavigation { get; set; } = null!;
+    public virtual University University { get; set; } = null!;
 }

@@ -9,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<RecruitmentSystemContext>(options =>
    options.UseSqlServer(builder.Configuration.GetConnectionString("RecruitmentSystem")));
-builder.Services.AddScoped<ApplicationViewModelContext>();
 
 var app = builder.Build();
 

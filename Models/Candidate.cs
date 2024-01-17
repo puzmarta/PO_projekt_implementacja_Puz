@@ -45,13 +45,13 @@ public partial class Candidate
 
     public virtual ICollection<Application> Applications { get; set; } = new List<Application>();
 
-    public virtual Gender GenderFkNavigation { get; set; } = null!;
+    public virtual Gender Gender { get; set; } = null!;
 
-    public virtual HighSchoolType HighSchoolTypeFkNavigation { get; set; } = null!;
+    public virtual HighSchoolType HighSchoolType { get; set; } = null!;
 
-    public virtual IdentityDocumentType IdentityDocumentTypeFkNavigation { get; set; } = null!;
+    public virtual IdentityDocumentType IdentityDocumentType { get; set; } = null!;
 
-    public virtual LoggedUser LoggedUserFkNavigation { get; set; } = null!;
+    public virtual LoggedUser LoggedUser { get; set; } = null!;
 
-    public virtual ICollection<RankingList> RankingListFks { get; set; } = new List<RankingList>();
+    public virtual ICollection<RankingList> RankingLists { get; set; } = new List<RankingList>();
 }

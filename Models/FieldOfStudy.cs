@@ -29,13 +29,13 @@ public partial class FieldOfStudy
 
     public int AcademicTitleFk { get; set; }
 
-    public virtual AcademicTitle AcademicTitleFkNavigation { get; set; } = null!;
+    public virtual AcademicTitle AcademicTitle { get; set; } = null!;
 
     public virtual ICollection<AnswerMapping> AnswerMappings { get; set; } = new List<AnswerMapping>();
 
-    public virtual DegreeLevel DegreeLevelFkNavigation { get; set; } = null!;
+    public virtual DegreeLevel DegreeLevel { get; set; } = null!;
 
-    public virtual Faculty FacultyFkNavigation { get; set; } = null!;
+    public virtual Faculty Faculty { get; set; } = null!;
 
     public virtual ICollection<RecruitmentCriterion> RecruitmentCriteria { get; set; } = new List<RecruitmentCriterion>();
 
@@ -43,5 +43,5 @@ public partial class FieldOfStudy
 
     public virtual ICollection<Specialization> Specializations { get; set; } = new List<Specialization>();
 
-    public virtual StudyForm StudyFormFkNavigation { get; set; } = null!;
+    public virtual StudyForm StudyForm { get; set; } = null!;
 }

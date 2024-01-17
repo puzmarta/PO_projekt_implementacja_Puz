@@ -27,9 +27,9 @@ public partial class Recruitment
 
     public virtual ICollection<Application> Applications { get; set; } = new List<Application>();
 
-    public virtual FieldOfStudy FieldOfStudyFkNavigation { get; set; } = null!;
+    public virtual FieldOfStudy FieldOfStudy { get; set; } = null!;
 
     public virtual ICollection<Recruitment> InversePreviousRoundFkNavigation { get; set; } = new List<Recruitment>();
 
-    public virtual Recruitment? PreviousRoundFkNavigation { get; set; }
+    public virtual Recruitment? PreviousRound { get; set; }
 }

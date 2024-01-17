@@ -239,23 +239,23 @@ public partial class RecruitmentSystemContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.GenderFkNavigation).WithMany(p => p.Candidates)
+            entity.HasOne(d => d.Gender).WithMany(p => p.Candidates)
                 .HasForeignKey(d => d.GenderFk)
                 .HasConstraintName("FK__Candidate__Gende__534D60F1");
 
-            entity.HasOne(d => d.HighSchoolTypeFkNavigation).WithMany(p => p.Candidates)
+            entity.HasOne(d => d.HighSchoolType).WithMany(p => p.Candidates)
                 .HasForeignKey(d => d.HighSchoolTypeFk)
                 .HasConstraintName("FK__Candidate__High___5629CD9C");
 
-            entity.HasOne(d => d.IdentityDocumentTypeFkNavigation).WithMany(p => p.Candidates)
+            entity.HasOne(d => d.IdentityDocumentType).WithMany(p => p.Candidates)
                 .HasForeignKey(d => d.IdentityDocumentTypeFk)
                 .HasConstraintName("FK__Candidate__Ident__5535A963");
 
-            entity.HasOne(d => d.LoggedUserFkNavigation).WithMany(p => p.Candidates)
+            entity.HasOne(d => d.LoggedUser).WithMany(p => p.Candidates)
                 .HasForeignKey(d => d.LoggedUserFk)
                 .HasConstraintName("FK__Candidate__Logge__5441852A");
 
-            entity.HasMany(d => d.RankingListFks).WithMany(p => p.CandidateFks)
+            entity.HasMany(d => d.RankingLists).WithMany(p => p.CandidateFks)
                 .UsingEntity<Dictionary<string, object>>(
                     "CandidateRankingList",
                     r => r.HasOne<RankingList>().WithMany()
@@ -381,7 +381,7 @@ public partial class RecruitmentSystemContext : DbContext
                 .HasColumnName("Faculty_Number");
             entity.Property(e => e.UniversityFk).HasColumnName("University_FK");
 
-            entity.HasOne(d => d.UniversityFkNavigation).WithMany(p => p.Faculties)
+            entity.HasOne(d => d.University).WithMany(p => p.Faculties)
                 .HasForeignKey(d => d.UniversityFk)
                 .HasConstraintName("FK__Faculty__Univers__45F365D3");
         });
@@ -426,19 +426,19 @@ public partial class RecruitmentSystemContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Study_Program");
 
-            entity.HasOne(d => d.AcademicTitleFkNavigation).WithMany(p => p.FieldOfStudies)
+            entity.HasOne(d => d.AcademicTitle).WithMany(p => p.FieldOfStudies)
                 .HasForeignKey(d => d.AcademicTitleFk)
                 .HasConstraintName("FK__Field_Of___Acade__4D94879B");
 
-            entity.HasOne(d => d.DegreeLevelFkNavigation).WithMany(p => p.FieldOfStudies)
+            entity.HasOne(d => d.DegreeLevel).WithMany(p => p.FieldOfStudies)
                 .HasForeignKey(d => d.DegreeLevelFk)
                 .HasConstraintName("FK__Field_Of___Degre__4CA06362");
 
-            entity.HasOne(d => d.FacultyFkNavigation).WithMany(p => p.FieldOfStudies)
+            entity.HasOne(d => d.Faculty).WithMany(p => p.FieldOfStudies)
                 .HasForeignKey(d => d.FacultyFk)
                 .HasConstraintName("FK__Field_Of___Facul__4AB81AF0");
 
-            entity.HasOne(d => d.StudyFormFkNavigation).WithMany(p => p.FieldOfStudies)
+            entity.HasOne(d => d.StudyForm).WithMany(p => p.FieldOfStudies)
                 .HasForeignKey(d => d.StudyFormFk)
                 .HasConstraintName("FK__Field_Of___Study__4BAC3F29");
         });
@@ -684,12 +684,12 @@ public partial class RecruitmentSystemContext : DbContext
             entity.Property(e => e.RoundNumber).HasColumnName("Round_Number");
             entity.Property(e => e.StartDate).HasColumnName("Start_Date");
 
-            entity.HasOne(d => d.FieldOfStudyFkNavigation).WithMany(p => p.Recruitments)
+            entity.HasOne(d => d.FieldOfStudy).WithMany(p => p.Recruitments)
                 .HasForeignKey(d => d.FieldOfStudyFk)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Recruitme__Field__59063A47");
 
-            entity.HasOne(d => d.PreviousRoundFkNavigation).WithMany(p => p.InversePreviousRoundFkNavigation)
+            entity.HasOne(d => d.PreviousRound).WithMany(p => p.InversePreviousRoundFkNavigation)
                 .HasForeignKey(d => d.PreviousRoundFk)
                 .HasConstraintName("FK__Recruitme__Previ__59FA5E80");
         });
@@ -826,4 +826,5 @@ public partial class RecruitmentSystemContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
 }
