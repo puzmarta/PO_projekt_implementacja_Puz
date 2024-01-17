@@ -1,14 +1,22 @@
-﻿@model IEnumerable<PO_projekt_implementacja_Puz.ViewModels.ApplicationViewModel>
+﻿@model IEnumerable<PO_projekt_implementacja_Puz.Models.Application>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Podania";
 }
 
-<h1>Index</h1>
+<img class="miniature" src="~/resources/possum.jpg">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>Podania</h1>
+
+
+<form asp-controller="Applications" asp-action="Index" method="post">
+    <label for="categoryDropdown">Select Category:</label>
+    <select name="category" class="form-control" asp-items=ViewBag.CategoryList></select>
+    <button type="submit">Filter</button>
+</form>
+
+
+
 <table class="table">
     <thead>
         <tr>
@@ -30,6 +38,9 @@
             <th>
                 <h3>Kandydat</h3>
             </th>
+            <th>
+
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -38,13 +49,13 @@
        
             <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Identfier)
+                @Html.DisplayFor(modelItem => item.ApplicationIdentifier)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SubmissionDate)
+                @Html.DisplayFor(modelItem => item.Document.CreationDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status.Name)
+                @Html.DisplayFor(modelItem => item.ApplicationStatus.Name)
             </td>
             <td>
                     @Html.DisplayFor(modelItem => item.Recruitment.FieldOfStudyFkNavigation.FacultyFkNavigation.FacultyName)
@@ -59,6 +70,9 @@
                     }
                     @nameString
                     
+            </td>
+            <td>
+					<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
             </td>
         </tr>
 }

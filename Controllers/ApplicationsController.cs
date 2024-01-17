@@ -13,9 +13,9 @@ namespace PO_projekt_implementacja_Puz.Controllers
 {
     public class ApplicationsController : Controller
     {
-        private readonly ApplicationViewModelContext _context;
+        private readonly RecruitmentSystemContext _context;
 
-        public ApplicationsController(ApplicationViewModelContext context)
+        public ApplicationsController(RecruitmentSystemContext context)
         {
             _context = context;
         }
@@ -23,7 +23,15 @@ namespace PO_projekt_implementacja_Puz.Controllers
         // GET: Applications
         public async Task<IActionResult> Index()
         {
-            var applicationContext = _context.GetApplicationViewModels();
+            var applicationContext = _context.Applications.
+                Include(a => a.Document)
+                .Include(a => a.Candidate)
+                .Include(a => a.Candidate.LoggedUserFkNavigation)
+                .Include(a => a.Recruitment)
+                .Include(a => a.Recruitment.FieldOfStudyFkNavigation)
+                .Include(a => a.Recruitment.FieldOfStudyFkNavigation.FacultyFkNavigation)
+                .Include(a => a.ApplicationStatus)
+                .ToListAsync();
             return View(await applicationContext);
 
         }
@@ -36,9 +44,23 @@ namespace PO_projekt_implementacja_Puz.Controllers
                 return NotFound();
             }
 
-         
+            var application = await _context.Applications
+                .Include(a => a.Document)
+                .Include(a => a.Candidate)
+                .Include(a => a.Candidate.LoggedUserFkNavigation)
+                .Include(a => a.Recruitment)
+                .Include(a => a.Recruitment.FieldOfStudyFkNavigation)
+                .Include(a => a.Recruitment.FieldOfStudyFkNavigation.FacultyFkNavigation)
+                .Include(a => a.ApplicationStatus)
+                .FirstOrDefaultAsync(a => a.Id == id);
 
-            return View();
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+            return View(application);
+
         }
 
     }
