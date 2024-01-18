@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using PO_projekt_implementacja_Puz.Data;
+using PO_projekt_implementacja_Puz.Models;
 
 namespace PO_projekt_implementacja_Puz.Controllers
 {
@@ -19,33 +21,79 @@ namespace PO_projekt_implementacja_Puz.Controllers
         [HttpGet]
         public IActionResult Start()
         {
+
+            List<Question> questions = _context.Questions.ToList();
+            HttpContext.Session.SetString("questions", JsonConvert.SerializeObject(questions));
+            HttpContext.Session.SetInt32("currentQuestionIndex", -1);
+
+
             return View();
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> Question(int id)
+        public IActionResult NextQuestion()
         {
-         
+            List<Question> questions = JsonConvert.DeserializeObject<List<Question>>(HttpContext.Session.GetString("questions"));
+            int currentQuestionIndex = HttpContext.Session.GetInt32("currentQuestionIndex") ?? -1;
 
-            var question = await _context.Questions.FirstOrDefaultAsync(q => q.Id == id);
+            try
+            {
+                if (currentQuestionIndex == questions.Count() - 1)
+                    return RedirectToAction( "Result", "Questionary");
 
-            if (question == null)
+                Question question = questions[currentQuestionIndex + 1];
+                HttpContext.Session.SetInt32("currentQuestionIndex", currentQuestionIndex + 1);
+                return View("Question", question);
+
+            }
+            catch (ArgumentOutOfRangeException e)
             {
                 return NotFound();
             }
+        }
 
-            return View(question);
+        [HttpGet]
+        public IActionResult PreviousQuestion()
+        {
+            List<Question> questions = JsonConvert.DeserializeObject<List<Question>>(HttpContext.Session.GetString("questions"));
+            int currentQuestionIndex = HttpContext.Session.GetInt32("currentQuestionIndex") ?? -1;
+
+            try
+            {
+                if (currentQuestionIndex  == 0)
+                    return RedirectToAction("Start", "Questionary");
+
+                Question question = questions[currentQuestionIndex - 1];
+                HttpContext.Session.SetInt32("currentQuestionIndex", currentQuestionIndex - 1);
+                return View("Question", question);
+
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                return NotFound();
+            }
         }
 
 
-        [HttpPost]
 
-        public void SaveAnswer(int questionId, char answer)
+        [HttpPost]
+        public IActionResult SaveAnswer(int questionId, char answer)
         {
             //TODO (save answer for session)
 
-            RedirectToAction("Quesionary", "Question", new {id = questionId});
+            return RedirectToAction("NextQuestion", "Questionary");
+        }
+
+
+        [HttpGet]
+        public IActionResult Result()
+        {
+
+           
+
+            return View(null);
+
         }
 
     }

@@ -12,6 +12,12 @@ builder.Services.AddDbContext<RecruitmentSystemContext>(options =>
    options.UseSqlServer(builder.Configuration.GetConnectionString("RecruitmentSystem")), ServiceLifetime.Scoped);
 builder.Services.AddScoped<IDBUtilsService, DBUtilsService>();  
 builder.Services.AddScoped<ISelectListService, SelectListService>();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set your desired timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -27,6 +33,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 
