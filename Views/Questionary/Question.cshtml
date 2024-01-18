@@ -6,22 +6,44 @@
 
 <h1>Question</h1>
 
-<form asp-controller="Questionary" asp-action="SaveAnswer" method="post">
+<form asp-controller="Questionary" asp-action="SaveAnswer" method="post" onsubmit="return validateAnswersForm()">
     <h2>@Model.QuestionContent</h2>
 
 
-    <input type="radio" id="answerA" name="a" value="a" required>
+    <input type="radio" id="answerA" name="answers" value="a" required>
     <label for="answerA">@Model.AnswerA</label><br>
 
-    <input type="radio" id="answerB" name="a" value="b" required>
+    <input type="radio" id="answerB" name="answers" value="b" required>
     <label for="answerB">@Model.AnswerB</label><br>
 
-    <input type="radio" id="answerC" name="a" value="c" required>
+    <input type="radio" id="answerC" name="answers" value="c" required>
     <label for="answerC">@Model.AnswerC</label><br>
 
-    <input type="radio" id="answerD" name="a" value="d" required>
+    <input type="radio" id="answerD" name="answers" value="d" required>
     <label for="answerB">@Model.AnswerD</label><br>
 
     <br>
     <input type="submit" value="Submit">
 </form>
+
+
+<script>
+    function validateAnswersForm() {
+        var radioButtons = document.getElementsByName("answers");
+        var radioButtonChecked = false;
+
+        for (var i = 0; i < radioButtons.length; i++) {
+            if (radioButtons[i].checked) {
+                radioButtonChecked = true;
+                break;
+            }
+        }
+
+        if (!radioButtonChecked) {
+            alert("Jedna z odpowiedzi musi być zaznaczona");
+            return false;
+        }
+
+        return true;
+    }
+</script>

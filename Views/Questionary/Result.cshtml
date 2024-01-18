@@ -1,0 +1,20 @@
+﻿@model PO_projekt_implementacja_Puz.Models.FieldOfStudy
+
+
+@if( Model != null)
+{
+	<h2>Naszym zadaniem świetnie znajdziesz się na kierunku: </h2>
+	<h1>@Model.FieldName</h1>
+
+}
+else{
+
+	<h2>Nie udało nam się dopasować żadnego kierunku do twoich odpowiedzi.</h2>
+	<h3>Możesz srpóbować wypełnić quiz jeszcze raz</h3>
+
+	<form asp-controller="Questionary" asp-action="Start" method="get">
+		<button type="submit">Powtórz quiz</button>
+	</form>
+	
+
+}
