@@ -20,3 +20,15 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.small_icon {
+
+    max-height: 50px;
+    max-width: 50px;
+
+}
+
+.medium_icon {
+    max-height: 200px;
+    max-width: 200px;
+}

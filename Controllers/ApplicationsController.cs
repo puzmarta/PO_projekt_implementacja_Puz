@@ -186,6 +186,8 @@ namespace PO_projekt_implementacja_Puz.Controllers
                 .Include(a => a.Recruitment.FieldOfStudy)
                 .Include(a => a.Recruitment.FieldOfStudy.Faculty)
                 .Include(a => a.ApplicationStatus)
+                .Include(a => a.Recruitment.FieldOfStudy.DegreeLevel)
+                .Include(a => a.Documents)
                 .FirstOrDefaultAsync(a => a.Id == id);
 
             if (application == null)

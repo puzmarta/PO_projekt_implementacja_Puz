@@ -2,59 +2,179 @@
 
 @{
     ViewData["Title"] = "Details";
+    var appDocument = Model.Document;
+    var candidate = Model.Candidate;
+    var recruitment = Model.Recruitment;
+
 }
 
-<h1>Details</h1>
+<img class="medium_icon" src="~/resources/possum.jpg">
+
+<h2>Szczegóły podania</h2>
+
+<hr />
 
 <div>
-    <h4>Application</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ApplicationIdentifier)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ApplicationIdentifier)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RecruitmentIndex)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RecruitmentIndex)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ApplicationStatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ApplicationStatus.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Candidate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Candidate.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Document)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Document.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HighSchoolDiploma)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HighSchoolDiploma.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Recruitment)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Recruitment.Id)
-        </dd>
-    </dl>
+
+    <div>
+        <h4>Podanie</h4>
+        <hr/>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ApplicationIdentifier)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ApplicationIdentifier)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => appDocument.CreationDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => appDocument.CreationDate)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ApplicationStatus)
+            </dt>
+            <dd class="col-sm-10">
+                <table>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.ApplicationStatus.Name)
+                        </td>
+                        <td>
+                            <img class="small_icon" src="~/resources/possum.jpg">
+                        </td>
+                        
+                    </tr>
+                </table>
+               
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.RecruitmentIndex)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.RecruitmentIndex)
+            </dd>
+
+          
+        </dl>
+
+    </div>
+
+    <div>
+        <h4>Kandydat</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => candidate.LoggedUser.FirstName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => candidate.LoggedUser.FirstName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => candidate.LoggedUser.LastName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => candidate.LoggedUser.LastName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => candidate.Pesel)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => candidate.Pesel)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => candidate.Gender.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => candidate.Gender.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => candidate.LoggedUser.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => candidate.LoggedUser.Email)
+            </dd>
+        
+        </dl>
+
+    </div>
+
+    <div>
+        <h4>Rekrutacaja</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => recruitment.FieldOfStudy.FieldName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => recruitment.FieldOfStudy.FieldName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => recruitment.FieldOfStudy.Faculty.FacultyName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => recruitment.FieldOfStudy.Faculty.FacultyName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => recruitment.FieldOfStudy.DegreeLevel.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => recruitment.FieldOfStudy.DegreeLevel.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => recruitment.RoundNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => recruitment.RoundNumber)
+            </dd>
+        </dl>
+    </div>
+
+    <div>
+        <h4>Załączone dokumenty</h4>
+        <hr />
+
+        @if(Model.Documents.Count() == 0)
+        {
+            <h2>Brak dołączonych dokumentów</h2>
+        }
+        else
+        {
+            <table>
+            @foreach( var doc in Model.Documents)
+            {
+                
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => doc.Name)
+                        </td>
+                        <td>
+                            <a href="~/documents/Etap 2 PO Prototypy interfejsów - Nnoli Jakub, Puz Marta.pdf" target="_blank">
+                                <img class="small_icon" src="~/resources/possum.jpg">
+                            </a>
+                            
+                        </td>
+
+                    </tr>
+                
+
+                
+            }
+            </table>
+
+
+        }
+
+    </div>
+
+
+
+
+
+
+
+
+
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
