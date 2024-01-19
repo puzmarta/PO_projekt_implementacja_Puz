@@ -10,16 +10,16 @@
     <h2>@Model.QuestionContent</h2>
 
 
-    <input type="radio" id="answerA" name="answers" value="a" required>
+    <input type="radio" id="answerA" name="answer" value="a" required>
     <label for="answerA">@Model.AnswerA</label><br>
 
-    <input type="radio" id="answerB" name="answers" value="b" required>
+    <input type="radio" id="answerB" name="answer" value="b" required>
     <label for="answerB">@Model.AnswerB</label><br>
 
-    <input type="radio" id="answerC" name="answers" value="c" required>
+    <input type="radio" id="answerC" name="answer" value="c" required>
     <label for="answerC">@Model.AnswerC</label><br>
 
-    <input type="radio" id="answerD" name="answers" value="d" required>
+    <input type="radio" id="answerD" name="answer" value="d" required>
     <label for="answerB">@Model.AnswerD</label><br>
 
     <br>
@@ -34,7 +34,7 @@
 
 <script>
     function validateAnswersForm() {
-        var radioButtons = document.getElementsByName("answers");
+        var radioButtons = document.getElementsByName("answer");
         var radioButtonChecked = false;
 
         for (var i = 0; i < radioButtons.length; i++) {

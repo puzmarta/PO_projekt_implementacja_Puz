@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PO_projekt_implementacja_Puz.Data;
 using PO_projekt_implementacja_Puz.Models;
+using System.Runtime.Serialization;
 
 namespace PO_projekt_implementacja_Puz.Controllers
 {
@@ -78,9 +79,36 @@ namespace PO_projekt_implementacja_Puz.Controllers
 
 
         [HttpPost]
-        public IActionResult SaveAnswer(int questionId, char answer)
+        public IActionResult SaveAnswer(string answer)
         {
-            //TODO (save answer for session)
+
+            List<Question> questions = JsonConvert.DeserializeObject<List<Question>>(HttpContext.Session.GetString("questions"));
+            int currentQuestionIndex = HttpContext.Session.GetInt32("currentQuestionIndex") ?? -1;
+            string serializedSavedAnswers = HttpContext.Session.GetString("savedAnswers");
+
+            if (currentQuestionIndex == -1)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                int currentQuestionId = questions[currentQuestionIndex].Id;
+                Dictionary<int, string>? savedAnswers = (serializedSavedAnswers != null) ?
+                    JsonConvert.DeserializeObject<Dictionary<int, string>>(serializedSavedAnswers) :
+             
+                    new Dictionary<int, string>();
+
+   
+                savedAnswers[currentQuestionId] = answer;
+                HttpContext.Session.SetString("savedAnswers", JsonConvert.SerializeObject(savedAnswers));
+
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                return NotFound();
+            }
+
 
             return RedirectToAction("NextQuestion", "Questionary");
         }
@@ -90,7 +118,15 @@ namespace PO_projekt_implementacja_Puz.Controllers
         public IActionResult Result()
         {
 
-           
+            Dictionary<int, string> savedAnswers = JsonConvert.DeserializeObject<Dictionary<int, string>>(HttpContext.Session.GetString("savedAnswers")) ?? new Dictionary<int, string>();
+
+            string temp = "";
+
+            foreach (var value in savedAnswers.Values)
+                temp = temp + $"({value})";
+
+            ViewBag.Temp = temp;
+
 
             return View(null);
 
