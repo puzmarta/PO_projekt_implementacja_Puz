@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PO_projekt_implementacja_Puz.Data;
 using PO_projekt_implementacja_Puz.Models;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace PO_projekt_implementacja_Puz.Controllers
@@ -120,17 +121,79 @@ namespace PO_projekt_implementacja_Puz.Controllers
 
             Dictionary<int, string> savedAnswers = JsonConvert.DeserializeObject<Dictionary<int, string>>(HttpContext.Session.GetString("savedAnswers")) ?? new Dictionary<int, string>();
 
-            string temp = "";
+            Dictionary<int,int>? pointsMapping = SumPointForFieldsBasedOnAnswers(savedAnswers);
 
-            foreach (var value in savedAnswers.Values)
-                temp = temp + $"({value})";
+            if (pointsMapping == null)
+                return View(null);
 
-            ViewBag.Temp = temp;
+            else
+                return View(GetFieldOfStudyRecommendation(pointsMapping));
 
 
-            return View(null);
+
 
         }
 
+
+        private Dictionary<int, int>? SumPointForFieldsBasedOnAnswers(Dictionary<int, string> answers)
+        {
+
+            Dictionary<int, int> fieldPoints = new Dictionary<int, int>();
+        
+
+            foreach( var answer in answers)
+            {
+                List<AnswerMapping> temp = _context.AnswerMappings.Where(
+                    map => map.Answer == answer.Value && map.QuestionFk == answer.Key).ToList();
+
+                foreach(var answerMapping in temp)
+                {
+                    fieldPoints[answerMapping.FieldOfStudyFk] =+ answerMapping.Points;
+
+                }
+            }
+
+            if (fieldPoints.Count == 0)
+                return null;
+
+            else return fieldPoints;
+        }
+
+
+        private FieldOfStudy? GetFieldOfStudyRecommendation(Dictionary<int, int> points)
+        {
+
+            int? keyWithMaxValue = null;
+            int max = int.MinValue;
+            bool isMaxValueUnique = true;
+
+            foreach (var kvp in points)
+            {
+                if (kvp.Value > max)
+                {
+                    max = kvp.Value;
+                    keyWithMaxValue = kvp.Key;
+                    isMaxValueUnique = true;
+                }
+                else if (kvp.Value == max)
+                {
+                    isMaxValueUnique = false;
+                }
+            }
+
+            if (!isMaxValueUnique)
+                return null;
+
+            FieldOfStudy? recommendation = _context.FieldOfStudies.Where(f => f.Id == keyWithMaxValue).FirstOrDefault();
+
+            return recommendation;
+        }
+
+
     }
+
+
+   
+
+
 }
