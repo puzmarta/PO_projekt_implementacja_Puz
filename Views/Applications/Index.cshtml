@@ -65,7 +65,7 @@
             {
 
 
-                <tr>
+                <tr data-application-id="@item.Id">
                     <td>
                         @Html.DisplayFor(modelItem => item.ApplicationIdentifier)
                     </td>
@@ -102,3 +102,29 @@
 
     </tbody>
 </table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var rows = document.querySelectorAll("tbody tr");
+
+        rows.forEach(function (row) {
+            row.addEventListener("click", function () {
+
+                rows.forEach(function (r) {
+                    r.classList.remove("highlighted-row");
+                });
+
+
+                row.classList.add("highlighted-row");
+            });
+
+            row.addEventListener("dblclick", function () {
+
+                var applicationId = row.getAttribute("data-application-id");
+
+
+                window.location.href = "/Applications/Details/" + applicationId;
+            });
+        });
+    });
+</script>

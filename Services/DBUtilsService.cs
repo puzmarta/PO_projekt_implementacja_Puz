@@ -25,7 +25,17 @@ namespace PO_projekt_implementacja_Puz.Services
 
         public List<Application> GetFilteredApplications(int? year, int facultyId, int fieldId)
         {
-            var applications = _context.Applications.ToList();
+            var applications = _context.Applications
+                .Include(a => a.Document)
+                .Include(a => a.Candidate)
+                .Include(a => a.Candidate.LoggedUser)
+                .Include(a => a.Recruitment)
+                .Include(a => a.Recruitment.FieldOfStudy)
+                .Include(a => a.Recruitment.FieldOfStudy.Faculty)
+                .Include(a => a.ApplicationStatus)
+                .Include(a => a.Recruitment.FieldOfStudy.DegreeLevel)
+                .Include(a => a.Documents)
+                .ToList();
 
             if (year != null)
             {

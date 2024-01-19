@@ -6,6 +6,11 @@
 	<h2>Naszym zadaniem świetnie znajdziesz się na kierunku: </h2>
 	<h1>@Model.FieldName</h1>
 
+	<form asp-controller="FieldOfStudies" asp-action="Details" method="get">
+		<input type="hidden" name="id" value="@Model.Id" />
+		<button type="submit">Strona kierunku</button>
+	</form>
+
 }
 else{
 

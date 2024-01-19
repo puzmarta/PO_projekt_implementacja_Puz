@@ -1,0 +1,84 @@
+﻿@model PO_projekt_implementacja_Puz.Models.FieldOfStudy
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>FieldOfStudy</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="FieldName" class="control-label"></label>
+                <input asp-for="FieldName" class="form-control" />
+                <span asp-validation-for="FieldName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FieldAbbreviation" class="control-label"></label>
+                <input asp-for="FieldAbbreviation" class="form-control" />
+                <span asp-validation-for="FieldAbbreviation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FieldDescription" class="control-label"></label>
+                <input asp-for="FieldDescription" class="form-control" />
+                <span asp-validation-for="FieldDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdmissionLimit" class="control-label"></label>
+                <input asp-for="AdmissionLimit" class="form-control" />
+                <span asp-validation-for="AdmissionLimit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudyProgram" class="control-label"></label>
+                <input asp-for="StudyProgram" class="form-control" />
+                <span asp-validation-for="StudyProgram" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudyPlan" class="control-label"></label>
+                <input asp-for="StudyPlan" class="form-control" />
+                <span asp-validation-for="StudyPlan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CourseCards" class="control-label"></label>
+                <input asp-for="CourseCards" class="form-control" />
+                <span asp-validation-for="CourseCards" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FacultyFk" class="control-label"></label>
+                <select asp-for="FacultyFk" class="form-control" asp-items="ViewBag.FacultyFk"></select>
+                <span asp-validation-for="FacultyFk" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudyFormFk" class="control-label"></label>
+                <select asp-for="StudyFormFk" class="form-control" asp-items="ViewBag.StudyFormFk"></select>
+                <span asp-validation-for="StudyFormFk" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DegreeLevelFk" class="control-label"></label>
+                <select asp-for="DegreeLevelFk" class="form-control" asp-items="ViewBag.DegreeLevelFk"></select>
+                <span asp-validation-for="DegreeLevelFk" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AcademicTitleFk" class="control-label"></label>
+                <select asp-for="AcademicTitleFk" class="form-control" asp-items="ViewBag.AcademicTitleFk"></select>
+                <span asp-validation-for="AcademicTitleFk" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
