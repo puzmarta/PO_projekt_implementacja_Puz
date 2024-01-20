@@ -8,9 +8,20 @@
 
 }
 
-<img class="medium_icon" src="~/resources/possum.jpg">
 
-<h2>Szczegóły podania</h2>
+
+
+
+<table>
+    <tr>
+        <td>
+            <img class="medium_icon" src="~/images/pwr_logo.png">
+        </td>
+        <td>
+            <h2>Szczegóły podania</h2>
+        </td>
+    </tr>
+</table>
 
 <hr />
 
@@ -36,13 +47,18 @@
                 @Html.DisplayNameFor(model => model.ApplicationStatus)
             </dt>
             <dd class="col-sm-10">
-                <table>
+                <table >
                     <tr>
-                        <td>
+                        <td style="padding:8px;">
                             @Html.DisplayFor(model => model.ApplicationStatus.Name)
                         </td>
-                        <td>
-                            <img class="small_icon" src="~/resources/possum.jpg">
+                        <td style="padding:8px;">
+                            
+                     
+                                    <img class="small_icon" src="~/images/@ViewBag.IconFilename">
+                    
+
+                     
                         </td>
                         
                     </tr>
@@ -146,12 +162,15 @@
             {
                 
                     <tr>
-                        <td>
+                        <td style="padding:8px;">
                             @Html.DisplayFor(model => doc.Name)
                         </td>
                         <td>
-                            <a href="~/documents/Etap 2 PO Prototypy interfejsów - Nnoli Jakub, Puz Marta.pdf" target="_blank">
-                                <img class="small_icon" src="~/resources/possum.jpg">
+
+                        </td>
+                        <td style="padding:8px;">
+                            <a href="~/documents/@doc.Name">
+                                <img class="small_icon" src="~/images/doc_icon.png">
                             </a>
                             
                         </td>

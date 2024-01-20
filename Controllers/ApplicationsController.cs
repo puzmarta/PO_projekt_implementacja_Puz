@@ -95,6 +95,7 @@ namespace PO_projekt_implementacja_Puz.Controllers
             var application = await _context.Applications
                 .Include(a => a.Document)
                 .Include(a => a.Candidate)
+                .Include(a => a.Candidate.Gender)
                 .Include(a => a.Candidate.LoggedUser)
                 .Include(a => a.Recruitment)
                 .Include(a => a.Recruitment.FieldOfStudy)
@@ -102,12 +103,15 @@ namespace PO_projekt_implementacja_Puz.Controllers
                 .Include(a => a.ApplicationStatus)
                 .Include(a => a.Recruitment.FieldOfStudy.DegreeLevel)
                 .Include(a => a.Documents)
+                
                 .FirstOrDefaultAsync(a => a.Id == id);
 
             if (application == null)
             {
                 return NotFound();
             }
+
+            ViewBag.IconFilename = _dbUtils.MapIconToStatus(application.ApplicationStatus);
 
             return View(application);
 

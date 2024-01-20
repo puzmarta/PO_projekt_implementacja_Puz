@@ -4,11 +4,28 @@
 @{
 }
 
+<div class="center_list">
 
-<h1> Nie wiesz co studiować?</h1>
-<h2> Znajdź kierunek dla siebie!</h2>
-<h2>Weź udział w quizie i odpowiedz na pytania, aby my postaramy się polecić ci kierunek!</h2>
+    <ul class="button_list">
+        <li>
+            <h1> Nie wiesz co studiować?</h1>
+        </li>
+        <li>
+            <h3> Znajdź kierunek dla siebie!</h3>
+        </li>
+        <li>
+            <h3>Weź udział w quizie i odpowiedz na pytania, aby my postaramy się polecić ci kierunek!</h3>
+        </li>
+        <li>
+            <br />
+            <form asp-controller="Questionary" asp-action="NextQuestion" method="get">
+                <button class="large  hover" type="submit">Start</button>
+            </form>
+        </li>
 
-<form asp-controller="Questionary" asp-action="NextQuestion" method="get">
-    <button type="submit">Start</button>
-</form>
+
+    </ul>
+   
+</div>
+
+

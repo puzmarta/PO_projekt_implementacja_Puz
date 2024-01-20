@@ -9,8 +9,16 @@ namespace PO_projekt_implementacja_Puz.Services
     {
             public SelectList GetYearsSelectList(int? selectedYear, List<int> yearsList);
             public SelectList GetFacultiesSelectList(int selectedFacultyId);
-            public SelectList GetFieldsOfStudySelectList(int selectedFieldId);
+            public List<FieldSelectListItem> GetFieldsOfStudySelectList(int selectedFieldId);
 
+    }
+
+    public class FieldSelectListItem
+    {
+        public string Text { get; set; }
+        public string Id { get; set; }
+        public string FacultyId { get; set; }
+        public bool Selected { get; set; }
     }
 
     public class SelectListService: ISelectListService
@@ -61,22 +69,27 @@ namespace PO_projekt_implementacja_Puz.Services
             return new SelectList(selectListFaculties, "Value", "Text", selectedFacultyId);
         }
 
-        public SelectList GetFieldsOfStudySelectList(int selectedFieldId)
+
+    
+
+
+        public List<FieldSelectListItem> GetFieldsOfStudySelectList(int selectedFieldId)
         {
             var fieldsList = _context.FieldOfStudies.ToList();
 
-            fieldsList.Insert(0, new FieldOfStudy { Id = -1, FieldName = "---" });
+            fieldsList.Insert(0, new FieldOfStudy { Id = -1, FieldName = "---", FacultyFk = -1 });
 
             var selectListFields = fieldsList
-                .Select(field => new SelectListItem
+                .Select(field => new FieldSelectListItem
                 {
-                    Value = field.Id.ToString(),
+                    Id = field.Id.ToString(),
                     Text = field.FieldName,
-                    Selected = field.Id == selectedFieldId
+                    Selected = field.Id == selectedFieldId,
+                    FacultyId = field.FacultyFk.ToString()
                 })
                 .ToList();
 
-            return new SelectList(selectListFields, "Value", "Text", selectedFieldId);
+            return selectListFields;
 
         }
 

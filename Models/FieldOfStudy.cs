@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PO_projekt_implementacja_Puz.Models;
 
@@ -7,6 +8,7 @@ public partial class FieldOfStudy
 {
     public int Id { get; set; }
 
+    [Display(Name = "Kierunek")]
     public string FieldName { get; set; } = null!;
 
     public string FieldAbbreviation { get; set; } = null!;

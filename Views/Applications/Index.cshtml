@@ -2,23 +2,67 @@
 
 @{
     ViewData["Title"] = "Podania";
+    var fieldDropdownList = new SelectList(Model.FieldsOfStudy, "Id", "Text", Model.SelectedFieldOfStudy);
 }
 
-<img class="medium_icon" src="~/resources/possum.jpg">
+<table >
+    <tr>
+        <td>
+            <img class="medium_icon" src="~/images/pwr_logo.png">
+        </td>
+        <td>
+            <h1>Podania</h1>
+        </td>
+    </tr>
+</table>
 
-<h1>Podania</h1>
+
+
+
 
 
 <form asp-controller="Applications" asp-action="Index" method="post">
-    <label for="categoryDropdown">Rok:</label>
-    <select name="year" class="form-control" asp-items="@Model.Years"></select>
-    <label for="categoryDropdown">Wydział:</label>
-    <select name="facultyId" class="form-control" asp-items="@Model.Faculties"></select>
-    <label for="categoryDropdown">Kierunek</label>
-    <select name="fieldId" class="form-control" asp-items="@Model.FieldsOfStudy"></select>
 
-    <button type="submit">Filter</button>
+    <table style="width: 100%; align-content:center">
+        <thead>
+        <th>
+            <label for="categoryDropdown">Rok:</label>
+        </th>
+        <th>
+            <label for="categoryDropdown">Wydział:</label>
+
+        </th>
+        <th>
+          <label for="categoryDropdown">Kierunek</label>
+        </th>
+        <th>
+            
+        </th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select name="year" class="form-control" asp-items="@Model.Years"></select>
+                </td>
+                <td>
+                    <select id="facultyDropdown" name="facultyId" class="form-control" asp-items="@Model.Faculties"></select>
+                </td>
+                <td>
+                    <select id="fieldDropdown" name="fieldId" class="form-control" asp-items="@fieldDropdownList"></select>
+                </td>
+                <td>
+                    <button class="hover fill" type="submit">Szukaj</button>
+                </td>
+            </tr>
+        </tbody>
+     
+
+    </table>
+   
+  
 </form>
+
+<br />
 
 
 
@@ -43,9 +87,7 @@
             <th>
                 <h3>Kandydat</h3>
             </th>
-            <th>
 
-            </th>
         </tr>
     </thead>
     <tbody>
@@ -65,7 +107,7 @@
             {
 
 
-                <tr data-application-id="@item.Id">
+                <tr class="eligible" data-application-id="@item.Id">
                     <td>
                         @Html.DisplayFor(modelItem => item.ApplicationIdentifier)
                     </td>
@@ -89,9 +131,6 @@
                         @nameString
 
                     </td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    </td>
                 </tr>
             }
 
@@ -105,7 +144,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var rows = document.querySelectorAll("tbody tr");
+        var rows = document.querySelectorAll("tbody tr.eligible");
 
         rows.forEach(function (row) {
             row.addEventListener("click", function () {
@@ -127,4 +166,5 @@
             });
         });
     });
+
 </script>

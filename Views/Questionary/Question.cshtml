@@ -4,31 +4,51 @@
     ViewData["Title"] = "Question";
 }
 
-<h1>Question</h1>
-
 <form asp-controller="Questionary" asp-action="SaveAnswer" method="post" onsubmit="return validateAnswersForm()">
-    <h2>@Model.QuestionContent</h2>
 
+    <div class="button_list">
 
-    <input type="radio" id="answerA" name="answer" value="a" required>
-    <label for="answerA">@Model.AnswerA</label><br>
+        <ul class=" button_list">
+        <li>
+            <h2>@Model.QuestionContent</h2>
+        </li>
+        <li class="left">
+            <input type="radio" id="answerA" name="answer" value="a" required>
+            <label for="answerA">@Model.AnswerA</label><br>
+        </li>
+            <li class="left">
+            <input type="radio" id="answerB" name="answer" value="b" required>
+            <label for="answerB">@Model.AnswerB</label><br>
+        </li>
+            <li class="left">
+            <input type="radio" id="answerC" name="answer" value="c" required>
+            <label for="answerC">@Model.AnswerC</label><br>
+        </li>
+            <li class="left">
+            <input type="radio" id="answerD" name="answer" value="d" required>
+            <label for="answerB">@Model.AnswerD</label><br>
+        </li>
+        <li>
+            <br>
+            <input class="large hover" type="submit" value="Dalej">
+        </li>
+        </ul>
 
-    <input type="radio" id="answerB" name="answer" value="b" required>
-    <label for="answerB">@Model.AnswerB</label><br>
-
-    <input type="radio" id="answerC" name="answer" value="c" required>
-    <label for="answerC">@Model.AnswerC</label><br>
-
-    <input type="radio" id="answerD" name="answer" value="d" required>
-    <label for="answerB">@Model.AnswerD</label><br>
-
-    <br>
-    <input type="submit" value="Dalej">
+    </div>
+  
 </form>
 
 <form asp-controller="Questionary" asp-action="PreviousQuestion" method="get">
-    <br>
-    <input type="submit" value="Powrót">
+    <div class="button_list">
+        <ul class=" button_list">
+            <li>
+                <br />
+                <input class ="large hover" type="submit" value="Powrót">
+            </li>
+
+        </ul>
+    </div>
+    
 </form>
 
 

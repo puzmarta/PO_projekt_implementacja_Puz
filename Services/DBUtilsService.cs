@@ -10,6 +10,9 @@ namespace PO_projekt_implementacja_Puz.Services
         public List<Application> GetFilteredApplications(int? year, int facultyId, int fieldId);
         public List<int> GetUniqueApplicationYears();
 
+        public string MapIconToStatus(ApplicationStatus status);
+
+
 
     }
 
@@ -69,6 +72,28 @@ namespace PO_projekt_implementacja_Puz.Services
                 .Select(doc => doc.CreationDate!.Value.Year)
                 .Distinct()
                 .ToList();
+
+        }
+
+
+
+        public string MapIconToStatus(ApplicationStatus status)
+        {
+
+            switch (status.Id)
+            {
+                case 6:
+                    return "ok_icon.png";
+
+                case 5:
+                    return "not_ok_icon.png";
+
+                default:
+                    return "wait_icon.png";
+
+
+            }
+
 
         }
 

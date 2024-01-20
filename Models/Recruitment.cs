@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PO_projekt_implementacja_Puz.Models;
 
@@ -9,6 +10,7 @@ public partial class Recruitment
 
     public int FieldOfStudyFk { get; set; }
 
+    [Display(Name = "Tura")]
     public int RoundNumber { get; set; }
 
     public DateOnly? StartDate { get; set; }
