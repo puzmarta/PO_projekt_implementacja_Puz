@@ -9,9 +9,6 @@
 }
 
 
-
-
-
 <table>
     <tr>
         <td>
@@ -145,6 +142,43 @@
                 @Html.DisplayFor(model => recruitment.RoundNumber)
             </dd>
         </dl>
+    </div>
+
+    <div>
+        <h4>Matura</h4>
+        <hr />
+
+        @if (Model.HighSchoolDiploma == null)
+        {
+            <h5>Brak dołączonego dokumentu</h5>
+            <br />
+        }
+        else
+        {
+            <table>
+              
+                    <tr>
+                        <td style="padding:8px;">
+                            @Html.DisplayFor(model => Model.HighSchoolDiploma.DocumentFkNavigation.Name)
+                        </td>
+                        <td>
+                        </td>
+                        <td style="padding:8px;">
+                        <a href="~/documents/@Model.HighSchoolDiploma.DocumentFkNavigation.Name">
+                                <img class="small_icon" src="~/images/doc_icon.png">
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+            </table>
+            <br />
+
+
+
+        }
+
     </div>
 
     <div>

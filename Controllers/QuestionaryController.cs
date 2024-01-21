@@ -23,8 +23,8 @@ namespace PO_projekt_implementacja_Puz.Controllers
         [HttpGet]
         public IActionResult Start()
         {
-
-            List<Question> questions = _context.Questions.ToList();
+            int questionPoolId = 1;
+            List<Question> questions = _context.Questions.Where(q => q.QuestionPoolFk == questionPoolId).ToList();
             HttpContext.Session.SetString("questions", JsonConvert.SerializeObject(questions));
             HttpContext.Session.SetInt32("currentQuestionIndex", -1);
 

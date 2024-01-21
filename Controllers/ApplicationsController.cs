@@ -103,6 +103,7 @@ namespace PO_projekt_implementacja_Puz.Controllers
                 .Include(a => a.ApplicationStatus)
                 .Include(a => a.Recruitment.FieldOfStudy.DegreeLevel)
                 .Include(a => a.Documents)
+                .Include(a => a.HighSchoolDiploma.DocumentFkNavigation)
                 
                 .FirstOrDefaultAsync(a => a.Id == id);
 
