@@ -1,35 +1,41 @@
-﻿@model PO_projekt_implementacja_Puz.Models.FieldOfStudy
+﻿@model PO_projekt_implementacja_Puz.ViewModels.ResultViewModel
 
 
-@if( Model != null)
+@if( Model.reccomendedFields != null && Model.reccomendedFields.Count != 0)
 {
 	<div class="center_list">
+
+		
+
 		<ul class="button_list">
-			<li>
-				<h2>Naszym zadaniem świetnie znajdziesz się na kierunku: </h2>
-			</li>
-			<li>
-				<h1>@Model.FieldName</h1>
-			</li>
-			<li>
+
+			<li><h2>Naszym zadaniem świetnie znajdziesz się na: </h2></li>
+
+
+			@foreach(var field in Model.reccomendedFields)
+			{
 				<br />
-				<form asp-controller="FieldOfStudies" asp-action="Details" method="get">
-					<input type="hidden" name="id" value="@Model.Id" />
-					<button class="large  hover" type="submit">Strona kierunku</button>
-				</form>
-			</li>
+				<li>
+					<h2>@field.FieldName</h2>
+				</li>
+				<li>
+					<br />
+					<form asp-controller="FieldOfStudies" asp-action="Details" method="get">
+						<input type="hidden" name="id" value="@field.Id" />
+						<button class="large  hover" type="submit">Strona kierunku</button>
+					</form>
+				</li>
+				
+
+			}
+
+			
 		</ul>
 
 	</div>
 
 }
 else{
-
-	
-	
-
-	
-
 
 	<div class="center_list">
 		<ul class="button_list">

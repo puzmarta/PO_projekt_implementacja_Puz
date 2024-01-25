@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PO_projekt_implementacja_Puz.Data;
 using PO_projekt_implementacja_Puz.Models;
+using PO_projekt_implementacja_Puz.ViewModels;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Runtime.Serialization;
@@ -44,7 +45,7 @@ namespace PO_projekt_implementacja_Puz.Controllers
             try
             {
                 if (currentQuestionIndex == questions.Count() - 1)
-                    return RedirectToAction( "Result", "Questionary");
+                    return RedirectToAction("Result", "Questionary");
 
                 Question question = questions[currentQuestionIndex + 1];
                 HttpContext.Session.SetInt32("currentQuestionIndex", currentQuestionIndex + 1);
@@ -65,7 +66,7 @@ namespace PO_projekt_implementacja_Puz.Controllers
 
             try
             {
-                if (currentQuestionIndex  == 0)
+                if (currentQuestionIndex == 0)
                     return RedirectToAction("Start", "Questionary");
 
                 Question question = questions[currentQuestionIndex - 1];
@@ -99,10 +100,10 @@ namespace PO_projekt_implementacja_Puz.Controllers
                 int currentQuestionId = questions[currentQuestionIndex].Id;
                 Dictionary<int, string>? savedAnswers = (serializedSavedAnswers != null) ?
                     JsonConvert.DeserializeObject<Dictionary<int, string>>(serializedSavedAnswers) :
-             
+
                     new Dictionary<int, string>();
 
-   
+
                 savedAnswers[currentQuestionId] = answer;
                 HttpContext.Session.SetString("savedAnswers", JsonConvert.SerializeObject(savedAnswers));
 
@@ -121,22 +122,33 @@ namespace PO_projekt_implementacja_Puz.Controllers
         public IActionResult Result()
         {
             int currentQuestionIndex = HttpContext.Session.GetInt32("currentQuestionIndex") ?? NO_CURRENT_QUESTION;
-            if(currentQuestionIndex == NO_CURRENT_QUESTION)
+            if (currentQuestionIndex == NO_CURRENT_QUESTION)
             {
                 return NotFound();
             }
 
             Dictionary<int, string> savedAnswers = JsonConvert.DeserializeObject<Dictionary<int, string>>(HttpContext.Session.GetString("savedAnswers")) ?? new Dictionary<int, string>();
 
-            Dictionary<int,int>? pointsMapping = SumPointForFieldsBasedOnAnswers(savedAnswers);
+            Dictionary<int, int>? pointsMapping = SumPointForFieldsBasedOnAnswers(savedAnswers);
 
             if (pointsMapping == null)
                 return View(null);
 
             else
-                return View(GetFieldOfStudyRecommendation(pointsMapping));
+            {
+                ResultViewModel viewModel = new ResultViewModel
+                {
+                    reccomendedFields = GetFieldOfStudyRecommendation(pointsMapping)
+                };
+				return View(viewModel);
+			}
+
+            
+
 
         }
+    
+               
 
         private List<AnswerMapping> GetQuestionMappings(int questionId, string answer)
         {
@@ -170,31 +182,37 @@ namespace PO_projekt_implementacja_Puz.Controllers
         }
 
 
-        private FieldOfStudy? GetFieldOfStudyRecommendation(Dictionary<int, int> points)
+        private List<FieldOfStudy> GetFieldOfStudyRecommendation(Dictionary<int, int> points)
         {
 
-            int? keyWithMaxValue = null;
             int max = int.MinValue;
-            bool isMaxValueUnique = true;
+
+            List<int> maxValuesField = new List<int>();
+         
 
             foreach (var kvp in points)
             {
                 if (kvp.Value > max)
                 {
                     max = kvp.Value;
-                    keyWithMaxValue = kvp.Key;
-                    isMaxValueUnique = true;
-                }
-                else if (kvp.Value == max)
-                {
-                    isMaxValueUnique = false;
+                       
                 }
             }
 
-            if (!isMaxValueUnique)
-                return null;
 
-            FieldOfStudy? recommendation = _context.FieldOfStudies.Where(f => f.Id == keyWithMaxValue).FirstOrDefault();
+            foreach (var fieldID in points.Keys)
+            {
+                if (points[fieldID] == max){
+
+					maxValuesField.Add(fieldID);
+
+				}
+                       
+            }
+
+
+
+			List<FieldOfStudy> recommendation = _context.FieldOfStudies.Where(f => maxValuesField.Contains(f.Id)).ToList();
 
             return recommendation;
         }
