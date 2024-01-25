@@ -17,11 +17,6 @@ namespace PO_projekt_implementacja_Puz.ViewModels
 		public int SelectedFacultyId { get; set; }
 		public int SelectedFieldOfStudy {  get; set; }	
 
-		public int? SelectedYear { get; set; }
-
-	
-
-
 
 	}
 }

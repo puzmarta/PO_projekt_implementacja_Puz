@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Plugins;
 using PO_projekt_implementacja_Puz.Data;
@@ -49,15 +50,22 @@ namespace PO_projekt_implementacja_Puz.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+
+            var applications = GetAllApplications();
+            var facultySelectList = _selectListService.GetFacultiesSelectList(ISelectListService.NOT_SELECTED, _context.Faculties.ToList());
+            var fieldSelectList = _selectListService.GetFieldsOfStudySelectList(ISelectListService.NOT_SELECTED, _context.FieldOfStudies.ToList());
+            var yearsSelectList = _selectListService.GetYearsSelectList(null, _dbUtils.GetUniqueApplicationYears());
+
             var viewModel = new ApplicationsIndexViewModel
             {
-                Applications = GetAllApplications(),
-                Faculties = _selectListService.GetFacultiesSelectList(-1),
-                FieldsOfStudy = _selectListService.GetFieldsOfStudySelectList(-1),
-                Years = _selectListService.GetYearsSelectList(null,_dbUtils.GetUniqueApplicationYears()),
-                SelectedFacultyId = -1,
-                SelectedFieldOfStudy = -1,
-                SelectedYear = null,
+                
+                Applications = applications,
+                Faculties = facultySelectList,
+                FieldsOfStudy = fieldSelectList,
+                Years = yearsSelectList,
+                SelectedFacultyId = ISelectListService.NOT_SELECTED,
+                SelectedFieldOfStudy = ISelectListService.NOT_SELECTED
+
 
             };
 
@@ -68,15 +76,21 @@ namespace PO_projekt_implementacja_Puz.Controllers
         [HttpPost]
         public ActionResult Index(int? year, int facultyId, int fieldId)
         {
+            var applications = _dbUtils.GetFilteredApplications(year, facultyId, fieldId);
+            var facultySelectList = _selectListService.GetFacultiesSelectList(facultyId, _context.Faculties.ToList());
+            var fieldSelectList = _selectListService.GetFieldsOfStudySelectList(fieldId, _context.FieldOfStudies.ToList());
+            var yearsSelectList = _selectListService.GetYearsSelectList(year, _dbUtils.GetUniqueApplicationYears());
+
+
             var viewModel = new ApplicationsIndexViewModel
             {
-                Applications = _dbUtils.GetFilteredApplications(year, facultyId, fieldId),
-                Faculties = _selectListService.GetFacultiesSelectList(facultyId),
-                FieldsOfStudy = _selectListService.GetFieldsOfStudySelectList(fieldId),
-                Years = _selectListService.GetYearsSelectList(year, _dbUtils.GetUniqueApplicationYears()),
-                SelectedFacultyId = -1,
-                SelectedFieldOfStudy = -1,
-                SelectedYear = null,
+                Applications = applications,
+                Faculties = facultySelectList,
+                FieldsOfStudy = fieldSelectList,
+                Years = yearsSelectList,
+                SelectedFacultyId = facultyId,
+                SelectedFieldOfStudy = fieldId
+     
 
             };
 
@@ -103,7 +117,7 @@ namespace PO_projekt_implementacja_Puz.Controllers
                 .Include(a => a.ApplicationStatus)
                 .Include(a => a.Recruitment.FieldOfStudy.DegreeLevel)
                 .Include(a => a.Documents)
-                .Include(a => a.HighSchoolDiploma.DocumentFkNavigation)
+                .Include(a => a.HighSchoolDiploma.Document)
                 
                 .FirstOrDefaultAsync(a => a.Id == id);
 

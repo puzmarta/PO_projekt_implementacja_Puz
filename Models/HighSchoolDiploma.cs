@@ -31,5 +31,5 @@ public partial class HighSchoolDiploma
 
     public virtual ICollection<Application> Applications { get; set; } = new List<Application>();
 
-    public virtual Document DocumentFkNavigation { get; set; } = null!;
+    public virtual Document Document { get; set; } = null!;
 }

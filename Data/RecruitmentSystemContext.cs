@@ -513,7 +513,7 @@ public partial class RecruitmentSystemContext : DbContext
             entity.Property(e => e.PolishAdvancedResult).HasColumnName("Polish_Advanced_Result");
             entity.Property(e => e.PolishBasicResult).HasColumnName("Polish_Basic_Result");
 
-            entity.HasOne(d => d.DocumentFkNavigation).WithMany(p => p.HighSchoolDiplomas)
+            entity.HasOne(d => d.Document).WithMany(p => p.HighSchoolDiplomas)
                 .HasForeignKey(d => d.DocumentFk)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKHigh_School_DiplomaDocument");

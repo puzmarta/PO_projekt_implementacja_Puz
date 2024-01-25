@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using PO_projekt_implementacja_Puz.Data;
 using PO_projekt_implementacja_Puz.Models;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Runtime.Serialization;
 
 namespace PO_projekt_implementacja_Puz.Controllers
@@ -12,6 +13,7 @@ namespace PO_projekt_implementacja_Puz.Controllers
     {
 
         private readonly RecruitmentSystemContext _context;
+        public const int NO_CURRENT_QUESTION = -1;
 
 
         public QuestionaryController(RecruitmentSystemContext context)
@@ -26,7 +28,7 @@ namespace PO_projekt_implementacja_Puz.Controllers
             int questionPoolId = 1;
             List<Question> questions = _context.Questions.Where(q => q.QuestionPoolFk == questionPoolId).ToList();
             HttpContext.Session.SetString("questions", JsonConvert.SerializeObject(questions));
-            HttpContext.Session.SetInt32("currentQuestionIndex", -1);
+            HttpContext.Session.SetInt32("currentQuestionIndex", NO_CURRENT_QUESTION);
 
 
             return View();
@@ -37,7 +39,7 @@ namespace PO_projekt_implementacja_Puz.Controllers
         public IActionResult NextQuestion()
         {
             List<Question> questions = JsonConvert.DeserializeObject<List<Question>>(HttpContext.Session.GetString("questions"));
-            int currentQuestionIndex = HttpContext.Session.GetInt32("currentQuestionIndex") ?? -1;
+            int currentQuestionIndex = HttpContext.Session.GetInt32("currentQuestionIndex") ?? NO_CURRENT_QUESTION;
 
             try
             {
@@ -59,7 +61,7 @@ namespace PO_projekt_implementacja_Puz.Controllers
         public IActionResult PreviousQuestion()
         {
             List<Question> questions = JsonConvert.DeserializeObject<List<Question>>(HttpContext.Session.GetString("questions"));
-            int currentQuestionIndex = HttpContext.Session.GetInt32("currentQuestionIndex") ?? -1;
+            int currentQuestionIndex = HttpContext.Session.GetInt32("currentQuestionIndex") ?? NO_CURRENT_QUESTION;
 
             try
             {
@@ -84,7 +86,7 @@ namespace PO_projekt_implementacja_Puz.Controllers
         {
 
             List<Question> questions = JsonConvert.DeserializeObject<List<Question>>(HttpContext.Session.GetString("questions"));
-            int currentQuestionIndex = HttpContext.Session.GetInt32("currentQuestionIndex") ?? -1;
+            int currentQuestionIndex = HttpContext.Session.GetInt32("currentQuestionIndex") ?? NO_CURRENT_QUESTION;
             string serializedSavedAnswers = HttpContext.Session.GetString("savedAnswers");
 
             if (currentQuestionIndex == -1)
@@ -118,6 +120,11 @@ namespace PO_projekt_implementacja_Puz.Controllers
         [HttpGet]
         public IActionResult Result()
         {
+            int currentQuestionIndex = HttpContext.Session.GetInt32("currentQuestionIndex") ?? NO_CURRENT_QUESTION;
+            if(currentQuestionIndex == NO_CURRENT_QUESTION)
+            {
+                return NotFound();
+            }
 
             Dictionary<int, string> savedAnswers = JsonConvert.DeserializeObject<Dictionary<int, string>>(HttpContext.Session.GetString("savedAnswers")) ?? new Dictionary<int, string>();
 
@@ -129,8 +136,12 @@ namespace PO_projekt_implementacja_Puz.Controllers
             else
                 return View(GetFieldOfStudyRecommendation(pointsMapping));
 
+        }
 
-
+        private List<AnswerMapping> GetQuestionMappings(int questionId, string answer)
+        {
+            return  _context.AnswerMappings.Where(
+                    map => map.Answer == answer && map.QuestionFk == questionId).ToList();
 
         }
 
@@ -143,10 +154,9 @@ namespace PO_projekt_implementacja_Puz.Controllers
 
             foreach( var answer in answers)
             {
-                List<AnswerMapping> temp = _context.AnswerMappings.Where(
-                    map => map.Answer == answer.Value && map.QuestionFk == answer.Key).ToList();
+                List<AnswerMapping> temp = GetQuestionMappings(answer.Key, answer.Value);
 
-                foreach(var answerMapping in temp)
+                foreach (var answerMapping in temp)
                 {
                     fieldPoints[answerMapping.FieldOfStudyFk] =+ answerMapping.Points;
 

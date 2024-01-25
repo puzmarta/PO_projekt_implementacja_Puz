@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PO_projekt_implementacja_Puz.Controllers;
 using PO_projekt_implementacja_Puz.Data;
 using PO_projekt_implementacja_Puz.Models;
 
@@ -12,7 +13,7 @@ namespace PO_projekt_implementacja_Puz.Services
 
         public string MapIconToStatus(ApplicationStatus status);
 
-
+        public const int NOT_SELECTED = -1;
 
     }
 
@@ -45,12 +46,12 @@ namespace PO_projekt_implementacja_Puz.Services
                 applications = applications.Where(app => app.Document.CreationDate.Value.Year == year).ToList();
             }
 
-            if (facultyId != -1)
+            if (facultyId != IDBUtilsService.NOT_SELECTED)
             {
                 applications = applications.Where(app => app.Recruitment.FieldOfStudy.FacultyFk == facultyId).ToList();
             }
 
-            if (fieldId != -1)
+            if (fieldId != IDBUtilsService.NOT_SELECTED)
             {
                 applications = applications.Where(app => app.Recruitment.FieldOfStudyFk == fieldId).ToList();
             }

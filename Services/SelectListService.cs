@@ -8,8 +8,10 @@ namespace PO_projekt_implementacja_Puz.Services
     public interface ISelectListService
     {
             public SelectList GetYearsSelectList(int? selectedYear, List<int> yearsList);
-            public SelectList GetFacultiesSelectList(int selectedFacultyId);
-            public List<FieldSelectListItem> GetFieldsOfStudySelectList(int selectedFieldId);
+            public SelectList GetFacultiesSelectList(int selectedFacultyId, List<Faculty> facultiesList);
+            public List<FieldSelectListItem> GetFieldsOfStudySelectList(int selectedFieldId, List<FieldOfStudy> fieldsList);
+
+            public const int NOT_SELECTED = -1;
 
     }
 
@@ -23,17 +25,10 @@ namespace PO_projekt_implementacja_Puz.Services
 
     public class SelectListService: ISelectListService
     {
-        private readonly RecruitmentSystemContext _context;
-      
-
-        public SelectListService(RecruitmentSystemContext context)
-        {
-            _context = context;
-
-        }
-
+        
         public SelectList GetYearsSelectList(int? selectedYear, List<int> yearsList)
         {
+             yearsList.Sort();
 
             var selectListYears = yearsList.Select(value => new SelectListItem
             {
@@ -51,11 +46,10 @@ namespace PO_projekt_implementacja_Puz.Services
 
    
 
-        public SelectList GetFacultiesSelectList(int selectedFacultyId)
+        public SelectList GetFacultiesSelectList(int selectedFacultyId, List<Faculty> facultiesList)
         {
-            var facultiesList = _context.Faculties.ToList();
-
-            facultiesList.Insert(0, new Faculty { Id = -1, FacultyName = "---" });
+         
+            facultiesList.Insert(0, new Faculty { Id = ISelectListService.NOT_SELECTED, FacultyName = "---" });
 
             var selectListFaculties = facultiesList
                 .Select(faculty => new SelectListItem
@@ -71,13 +65,11 @@ namespace PO_projekt_implementacja_Puz.Services
 
 
     
-
-
-        public List<FieldSelectListItem> GetFieldsOfStudySelectList(int selectedFieldId)
+        public List<FieldSelectListItem> GetFieldsOfStudySelectList(int selectedFieldId, List<FieldOfStudy> fieldsList)
         {
-            var fieldsList = _context.FieldOfStudies.ToList();
+          
 
-            fieldsList.Insert(0, new FieldOfStudy { Id = -1, FieldName = "---", FacultyFk = -1 });
+            fieldsList.Insert(0, new FieldOfStudy { Id = ISelectListService.NOT_SELECTED, FieldName = "---", FacultyFk = ISelectListService.NOT_SELECTED });
 
             var selectListFields = fieldsList
                 .Select(field => new FieldSelectListItem
